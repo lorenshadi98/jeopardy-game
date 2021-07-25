@@ -99,6 +99,7 @@ async function fillTable() {
 function handleClick(evt) {
   // using the ids assigned to each table data field to change its text content
   let id = evt.target.id;
+
   let [catId, clueId] = id.split('-');
   let clue = categories[catId].clues[clueId];
   let msg;
@@ -106,9 +107,11 @@ function handleClick(evt) {
   if (!clue.showing) {
     msg = clue.question;
     clue.showing = 'question';
+    $(`#${catId}-${clueId}`).attr('style', 'background-color: #214b7a');
   } else if (clue.showing === 'question') {
     msg = clue.answer;
     clue.showing = 'answer';
+    $(`#${catId}-${clueId}`).attr('style', 'background-color: green');
   } else {
     return;
   }

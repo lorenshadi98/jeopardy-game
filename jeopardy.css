@@ -1,5 +1,5 @@
 body {
-  background-image: url('/images/bg.jpg');
+  background-image: url('/images/background.jpg');
 }
 
 table {
@@ -26,7 +26,8 @@ td {
 }
 
 #jeopardy tbody td:hover {
-  background-color: #28a200;
+  background-color: #214b7a;
+  cursor: pointer;
 }
 #gameBtn {
   font-size: large;
