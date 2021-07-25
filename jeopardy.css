@@ -1,8 +1,3 @@
-/* some colors you may find useful:
-  #28a200  -- green for showing answer
-  #8d2ab5 -- purple for the button
-  #74119c  -- dark purple hover action for button
-*/
 body {
   background-image: url('/images/bg.jpg');
 }
@@ -33,7 +28,9 @@ td {
 #jeopardy tbody td:hover {
   background-color: #28a200;
 }
-
+#gameBtn {
+  font-size: large;
+}
 /* Custom loader Created by @lukehaas on twitter  */
 
 .loader {

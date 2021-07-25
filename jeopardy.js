@@ -28,12 +28,12 @@ const NUM_QUESTIONS_PER_CAT = 5;
  */
 
 function getCategoryIds() {
-  const randNums = [];
+  const randCategories = [];
   for (let i = 0; i < NUM_CATEGORIES; i++) {
-    let newRandomNum = Math.floor(Math.random() * 15000);
-    randNums.push(newRandomNum);
+    let newRandomID = Math.floor(Math.random() * 15000);
+    randCategories.push(newRandomID);
   }
-  return randNums;
+  return randCategories;
 }
 
 /** Return object with data about a category:
@@ -53,6 +53,7 @@ async function getCategory(catId) {
     params: { id: catId }
   });
   const clues_array = [];
+  // Generates a clues array from the category response above.
   for (const clue of categoryRes.data.clues) {
     clues_array.push({
       question: clue.question,
@@ -64,16 +65,9 @@ async function getCategory(catId) {
   return categoryInfo;
 }
 
-/** Fill the HTML table#jeopardy with the categories & cells for questions.
- *
- * - The <thead> should be filled w/a <tr>, and a <td> for each category
- * - The <tbody> should be filled w/NUM_QUESTIONS_PER_CAT <tr>s,
- *   each with a question for each category in a <td>
- *   (initally, just show a "?" where the question/answer would go.)
- */
-
+/** Fills the HTML table#jeopardy with the categories & cells for questions.*/
 async function fillTable() {
-  // Creating table header and populating the category titles
+  // Creates table header and populates category titles into the header
   $('#jeopardy thead').empty();
   const $tableHeader = $(`<tr></tr>`);
   for (let category of categories) {
@@ -81,9 +75,9 @@ async function fillTable() {
   }
   $('#jeopardy thead').append($tableHeader);
 
-  // handling table body data
+  // Handles table body data
   $('#jeopardy tbody').empty();
-  // Creating question mark placeholders
+  // Creating question mark placeholders and creating ids for each clue place.
   for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++) {
     let $tr = $('<tr>');
     for (let j = 0; j < NUM_CATEGORIES; j++) {
@@ -103,7 +97,7 @@ async function fillTable() {
  * */
 
 function handleClick(evt) {
-  // capture the evt.target id attribute and then show the clue and question relating to that clicked td.
+  // using the ids assigned to each table data field to change its text content
   let id = evt.target.id;
   let [catId, clueId] = id.split('-');
   let clue = categories[catId].clues[clueId];
@@ -122,8 +116,8 @@ function handleClick(evt) {
   $(`#${catId}-${clueId}`).html(msg);
 }
 
-/** Wipe the current Jeopardy board, show the loading spinner,
- * and update the button used to fetch data.
+/** Wipes the current Jeopardy board, shows the loading spinner,
+ * and updates the button used to fetch data.
  */
 function showLoadingView() {
   $('#jeopardy').hide();
@@ -134,7 +128,7 @@ function showLoadingView() {
   }, 1200);
 }
 
-/** Remove the loading spinner and update the button used to fetch data. */
+/** Removes the loading spinner and updates the button used to fetch data. */
 
 function hideLoadingView() {
   $('#loader').hide();
@@ -143,15 +137,16 @@ function hideLoadingView() {
 
 /** Start game:
  *
- * - get random category Ids
- * - get data for each category
- * - create HTML table
+ * - gets random category Ids
+ * - gets data for each category
+ * - creates HTML table
  * */
 
 async function setupAndStart() {
   $('#jeopardy').show();
   const categoryIDs = await getCategoryIds(); // returns array of category ids
   categories = [];
+  // gets data for each category using its id
   for (const id of categoryIDs) {
     const categoryToFill = await getCategory(id);
     categories.push(categoryToFill);
