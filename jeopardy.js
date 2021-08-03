@@ -49,9 +49,12 @@ function getCategoryIds() {
  */
 
 async function getCategory(catId) {
-  const categoryRes = await axios.get('https://jservice.io/api/category', {
-    params: { id: catId }
-  });
+  const categoryRes = await axios.get(
+    'https://cors-anywhere.herokuapp.com/http://jservice.io/api/category',
+    {
+      params: { id: catId }
+    }
+  );
   const clues_array = [];
   // Generates a clues array from the category response above.
   for (const clue of categoryRes.data.clues) {
