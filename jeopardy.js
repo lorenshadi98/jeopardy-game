@@ -49,7 +49,7 @@ function getCategoryIds() {
  */
 
 async function getCategory(catId) {
-  const categoryRes = await axios.get('http://jservice.io/api/category', {
+  const categoryRes = await axios.get('https://jservice.io/api/category', {
     params: { id: catId }
   });
   const clues_array = [];
